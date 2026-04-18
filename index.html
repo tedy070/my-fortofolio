@@ -624,6 +624,90 @@ body.light-mode .nav-lang-btn:hover{
   .kontak-left{border-right:none;border-bottom:1px solid var(--border);}
   footer{flex-direction:column;gap:12px;text-align:center;padding:24px;}
 }
+
+  /* --- RESPONSIVE DESIGN FOR MOBILE --- */
+@media screen and (max-width: 768px) {
+  
+  /* 1. Atur Layout Utama menjadi Vertikal */
+  .hero-section {
+    flex-direction: column;
+    height: auto; /* Biar bisa di-scroll ke bawah */
+    padding: 100px 20px 50px 20px;
+    text-align: center;
+  }
+
+  /* 2. Sesuaikan Ukuran Teks Background "Portfolio" */
+  .bg-text {
+    font-size: 80px; /* Diperkecil agar tidak menutupi seluruh layar */
+    top: 15%;
+    opacity: 0.1; /* Lebih transparan agar tidak mengganggu fokus */
+  }
+
+  /* 3. Atur Posisi Foto agar di Tengah */
+  .hero-right {
+    order: 1; /* Foto naik ke atas */
+    margin-bottom: 30px;
+    width: 100%;
+  }
+
+  .hero-card {
+    width: 280px; /* Ukuran kartu lebih kecil di HP */
+    height: 400px;
+    margin: 0 auto;
+  }
+
+  .hero-card-img {
+    height: 320px !important;
+  }
+
+  /* 4. Atur Informasi Teks (Nama & Sosial) */
+  .info-left, .info-right {
+    position: static; /* Lepaskan dari posisi absolute */
+    transform: none;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .info-left {
+    order: 2; /* Nama muncul setelah foto */
+  }
+
+  .info-right {
+    order: 3; /* Jam dan Lokasi muncul terakhir */
+  }
+
+  .name-text {
+    font-size: 28px;
+    margin: 0 auto 15px auto;
+  }
+
+  .big-tedi {
+    font-size: 60px;
+  }
+
+  /* 5. Navigasi */
+  nav {
+    padding: 15px;
+    gap: 10px;
+    flex-wrap: wrap; /* Supaya menu tidak terpotong ke samping */
+  }
+
+  nav a {
+    font-size: 11px;
+    padding: 5px 15px;
+  }
+
+  /* 6. Jam dan Lokasi */
+  .location-time p {
+    font-size: 24px;
+  }
+
+  /* 7. Sosial Media Icons */
+  .socials {
+    justify-content: center;
+  }
+}
 </style>
 </head>
 <body>
