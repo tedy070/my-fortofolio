@@ -711,15 +711,21 @@ body.light-mode .nav-lang-btn:hover{
     </div>
 
     <div class="hero-right fade-in fade-in-delay-2">
-      <div class="hero-card">
-        <div class="hero-card-img-placeholder proj-img-coffee" style="height:460px;">
-          <!-- Decorative elements to simulate photo feel -->
-          <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(40,60,35,0.6) 0%,rgba(15,20,15,0.9) 100%);"></div>
-          <div style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;">
-            <div style="text-align:center;opacity:.15;">
-              <svg width="80" height="80" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-            </div>
+       <div class="hero-card" style="position:relative; background: #000; overflow: hidden; border-radius: inherit;">
+        <div class="hero-card-img" style="height:460px; overflow:hidden; border-radius:inherit; position:relative; display: flex; justify-content: center; align-items: start;">
+      
+           <img src="https://drive.google.com/uc?export=view&id=1JYpV9e44yLwxzXq1RGrQRBknbXY5Zsvy" 
+           alt="Tedi Zakaria Perdana" 
+           style="width: 100%; height: 100%; object-fit: cover; object-position: top center; z-index: 1;"
+           onerror="this.src='https://i.ibb.co/L6M9R3W/tedi-photo.png'">
+
+            <div class="light-gradient-overlay" style="position:absolute; inset:0; background:linear-gradient(160deg, rgba(40,60,35,0.5) 0%, rgba(15,20,15,0.8) 100%); z-index: 2; pointer-events: none;"></div>
+      
+            <div class="bottom-shadow-overlay" style="position:absolute; bottom:0; left:0; right:0; height: 30%; background:linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%); z-index: 3; pointer-events: none;"></div>
+
+           </div>
           </div>
+         </div>
           <!-- Warm light effect -->
           <div style="position:absolute;top:30%;left:20%;width:200px;height:200px;background:radial-gradient(ellipse,rgba(220,150,60,0.25) 0%,transparent 70%);"></div>
           <!-- Dark figure silhouette feel -->
