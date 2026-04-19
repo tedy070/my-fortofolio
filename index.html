@@ -705,6 +705,19 @@ body.light-mode .nav-lang-btn:hover{
     flex-wrap: wrap; /* Supaya menu tidak terpotong ke samping */
   }
 }
+
+  .proj-card.big {
+  overflow: hidden;
+  border-radius: 20px; /* Samakan dengan hero-card Anda */
+}
+
+.proj-img-wrapper img {
+  transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.proj-card:hover .proj-img-wrapper img {
+  transform: scale(1.05); /* Foto membesar sedikit saat hover */
+}
 </style>
 </head>
 <body>
@@ -883,16 +896,17 @@ body.light-mode .nav-lang-btn:hover{
       </div>
         <div class="proj-overlay"></div>
         <div class="proj-content">
-          <div class="proj-name">Situs E-commerce Kopi</div>
-          <div class="proj-desc">Toko online responsif dengan integrasi pembayaran gateway dan dashboard admin.</div>
+          <div class="proj-name">Pengalaman kerja YIMM 1</div>
           <div class="proj-tags">
-            <span class="proj-tag teal">Vue.js</span>
-            <span class="proj-tag fire">Firebase</span>
-          </div>
-          <a href="#" class="proj-link">
-            Lihat
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-          </a>
+            <a href="#" class="proj-link">
+            <div class="proj-link-content">
+            <span class="proj-tag teal">LIHAT</span>
+            <svg class="proj-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="7" y1="17" x2="17" y2="7"/>
+            <polyline points="7 7 17 7 17 17"/>
+           </svg>
+         </div>
+        </a>
         </div>
       </div>
 
