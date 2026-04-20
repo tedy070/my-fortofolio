@@ -6,15 +6,6 @@
 <title>TEDI ZAKARIA PERDANA | YANG KREATIF & SELALU INGIN BELAJAR</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
-
-<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
-<script>
-  Fancybox.bind("[data-fancybox]", {
-    Html: {
-      videoTpl: '<video class="fancybox__html5video" playsinline controls autoplay loop></video>'
-    }
-  });
-</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -1504,13 +1495,10 @@ updateClock();
   card.addEventListener('mouseleave', onMouseLeave);
 })();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
 <script>
-  Fancybox.bind("[data-fancybox]", {
-    // Pengaturan tambahan agar video otomatis terputar saat muncul
-    Html: {
-      videoTpl: '<video class="fancybox__html5video" playsinline controls autoplay muted loop></video>'
-    }
-  });
+  // Inisialisasi Fancybox agar membaca atribut data-fancybox
+  Fancybox.bind("[data-fancybox]", {});
 </script>
 </body>
 </html>
