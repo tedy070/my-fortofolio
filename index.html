@@ -1246,7 +1246,7 @@ body.light-mode .nav-lang-btn:hover{
       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
       <circle cx="12" cy="12" r="3"/>
     </svg>
-    <span class="visitor-label">Pengunjung</span>
+    <span class="visitor-label">Viewer</span>
     <span class="visitor-divider"></span>
     <strong class="visitor-count" id="stats-visitor">—</strong>
   </div>
@@ -1641,8 +1641,8 @@ updateClock();
   el.classList.add('loading');
 
   var MAX_WAIT = 8000;
-  var INTERVAL = 150;
-  var elapsed  = 0;
+  var INTERVAL = 200;
+  var elapsed = 0;
 
   var timer = setInterval(function () {
     elapsed += INTERVAL;
@@ -1650,26 +1650,34 @@ updateClock();
     if (window.goatcounter && typeof window.goatcounter.visit_count === 'function') {
       clearInterval(timer);
 
+      // Pastikan elemen kosong sebelum diisi oleh GoatCounter
+      el.innerHTML = ''; 
+
       window.goatcounter.visit_count({
         append: '#stats-visitor',
         no_onclick: true
       });
 
+      // Tunggu data masuk, lalu bersihkan formatnya
       setTimeout(function () {
         el.classList.remove('loading');
-        var raw = (el.innerText || el.textContent || '').trim();
-        var num = parseInt(raw.replace(/\D/g, ''), 10);
-        if (!isNaN(num) && num > 0) {
-          el.textContent = num.toLocaleString('id-ID');
+        // Ambil hanya angka dari teks yang masuk (misal: "123 views" menjadi "123")
+        var rawText = el.textContent || '';
+        var num = rawText.replace(/[^0-9]/g, ''); 
+        
+        if (num && num !== "") {
+          // Format angka ke ribuan Indonesia (contoh: 1.250)
+          el.textContent = parseInt(num, 10).toLocaleString('id-ID');
         } else {
-          el.textContent = raw || '—';
+          // Jika data masih 0 atau error, tampilkan 0 agar tidak kosong
+          el.textContent = '0';
         }
-      }, 600);
+      }, 1000);
 
     } else if (elapsed >= MAX_WAIT) {
       clearInterval(timer);
       el.classList.remove('loading');
-      el.textContent = '—';
+      el.textContent = '0';
     }
   }, INTERVAL);
 })();
