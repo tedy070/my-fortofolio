@@ -424,82 +424,148 @@ section{padding:100px 60px;}
 }
 
 /* ── KONTAK ── */
-#kontak{background:var(--bg2);padding:80px 60px 120px;}
-.kontak-header{text-align:center;margin-bottom:50px;}
-.kontak-title{
-  font-size:42px;font-weight:800;letter-spacing:-1px;margin-bottom:14px;
+#kontak {
+  background: var(--bg2);
+  padding: 80px 60px 120px;
 }
-.kontak-title .accent{color:var(--teal);}
-.kontak-sub{font-size:15px;color:var(--text2);max-width:600px;margin:0 auto;}
-  
-.kontak-card {
-  text-decoration: none;
-  color: inherit;
+
+.kontak-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.kontak-title {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 14px;
+}
+
+.kontak-title .accent {
+  color: var(--teal);
+}
+
+.kontak-sub {
+  font-size: 15px;
+  color: var(--text2);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Container utama tetap menggunakan Grid */
+.kontak-box {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--card);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr; /* Form tetap di samping */
+}
+
+/* Panel Kiri */
+.kontak-left {
+  padding: 40px 36px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+.kontak-status {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.03); /* Transparan tipis */
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ff4b4b;
+  letter-spacing: 1.5px;
+  margin-bottom: 32px;
+}
+
+.kontak-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff4b4b;
+  animation: pulse-red 2s ease-in-out infinite;
+}
+
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 75, 75, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(255, 75, 75, 0); }
+}
+
+/* Card Info (Email & WA) */
+.kontak-info-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border2);
   border-radius: 12px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-family: 'Inter', -apple-system, sans-serif;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
 }
 
-.kontak-card:hover {
-  background: rgba(79, 195, 161, 0.08); /* Warna Teal transparan saat hover */
-  border-color: rgba(79, 195, 161, 0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+.kontak-info-card:hover {
+  background: rgba(79, 195, 161, 0.08); /* Aksen teal saat hover */
+  border-color: var(--teal);
+  transform: translateX(5px); /* Efek geser sedikit ke kanan */
 }
 
-.kontak-icon-box {
-  flex-shrink: 0;
+.kontak-info-icon {
   width: 40px;
   height: 40px;
+  border-radius: 10px;
+  background: rgba(79, 195, 161, 0.1);
+  border: 1px solid rgba(79, 195, 161, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(79, 195, 161, 0.15);
-  color: #4fc3a1;
-  border-radius: 10px;
+  flex-shrink: 0;
+  color: var(--teal); /* Ikon jadi warna teal */
   transition: transform 0.3s ease;
 }
 
-.kontak-card:hover .kontak-icon-box {
+.kontak-info-card:hover .kontak-info-icon {
   transform: scale(1.1);
+  background: var(--teal);
+  color: #fff;
 }
 
-.kontak-icon-box svg {
-  width: 20px;
-  height: 20px;
+.kontak-info-icon svg {
+  width: 18px;
+  height: 18px;
 }
 
-.kontak-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.kontak-label {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: #94a3b8;
-  font-weight: 500;
-}
-
-.kontak-value {
-  font-size: 14px;
+.kontak-info-label {
+  font-size: 10px;
   font-weight: 600;
-  color: #f1f5f9; /* Putih bersih */
-  letter-spacing: 0.2px;
+  color: var(--text3);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  opacity: 0.7;
 }
 
-/* Memastikan tampilan mobile tetap aman */
-@media (max-width: 480px) {
-  .kontak-value {
-    font-size: 13px;
+.kontak-info-val {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* Responsif Mobile */
+@media (max-width: 768px) {
+  .kontak-box {
+    grid-template-columns: 1fr; /* Tumpuk vertikal di HP */
+  }
+  .kontak-left {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
   }
 }
 
