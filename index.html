@@ -726,100 +726,42 @@ body.light-mode .nav-lang-btn:hover{
   transform: scale(1.2);
 }
 
-/* ── VIEW COUNTER ── */
-.visitor-wrapper {
-  display: flex;
-  justify-content: center;
-  margin: 28px 0 0;
-}
-
-.visitor-pill {
+#view-counter {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 7px 16px 7px 12px;
-  background: rgba(79, 195, 161, 0.06);
-  border: 1px solid rgba(79, 195, 161, 0.18);
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+#like-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border: 1px solid #e0e0e0;
   border-radius: 999px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: border-color 0.2s ease, background 0.2s ease;
-  cursor: default;
-  user-select: none;
+  background: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #888;
+  transition: all 0.2s;
 }
 
-.visitor-pill:hover {
-  background: rgba(79, 195, 161, 0.1);
-  border-color: rgba(79, 195, 161, 0.32);
+#like-btn:hover {
+  border-color: #f87171;
+  color: #f87171;
 }
 
-.visitor-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--teal);
-  flex-shrink: 0;
-  animation: pulse-dot 2.4s ease-in-out infinite;
+#like-btn.liked {
+  background: #fff1f1;
+  border-color: #f87171;
+  color: #f87171;
 }
 
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(79,195,161,0.5); }
-  50%       { opacity: 0.7; box-shadow: 0 0 0 5px rgba(79,195,161,0); }
-}
-
-.visitor-icon {
-  color: var(--teal);
-  opacity: 0.75;
-  flex-shrink: 0;
-}
-
-.visitor-label {
-  font-family: var(--font);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text2);
-  letter-spacing: 0.2px;
-  white-space: nowrap;
-}
-
-.visitor-divider {
-  display: inline-block;
-  width: 1px;
-  height: 12px;
-  background: rgba(160, 160, 168, 0.25);
-  border-radius: 1px;
-}
-
-.visitor-count {
-  font-family: var(--font);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--teal);
-  letter-spacing: 0.3px;
-  min-width: 20px;
-  text-align: center;
-  white-space: nowrap;
-}
-
-.visitor-count.loading {
-  display: inline-block;
-  width: 38px;
-  height: 12px;
-  border-radius: 4px;
-  background: linear-gradient(
-    90deg,
-    rgba(79,195,161,0.08) 25%,
-    rgba(79,195,161,0.2) 50%,
-    rgba(79,195,161,0.08) 75%
-  );
-  background-size: 200% 100%;
-  animation: vc-shimmer 1.6s infinite;
-  vertical-align: middle;
-}
-
-@keyframes vc-shimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+#like-btn.liked svg {
+  fill: #f87171;
+  stroke: #f87171;
 }
 </style>
 </head>
@@ -1239,20 +1181,20 @@ body.light-mode .nav-lang-btn:hover{
         </form>
       </div>
 
-     <div class="visitor-wrapper">
-  <div class="visitor-pill">
-    <span class="visitor-dot"></span>
-    <svg class="visitor-icon" viewBox="0 0 24 24" width="13" height="13"
-         stroke="currentColor" stroke-width="2" fill="none"
-         stroke-linecap="round" stroke-linejoin="round">
-      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-      <circle cx="12" cy="12" r="3"/>
-    </svg>
-    <span class="visitor-label">Viewrs</span>
-    <span class="visitor-divider"></span>
-    <strong class="visitor-count loading" id="view-count"></strong>
-  </div>
-</div>
+      <button id="like-btn" onclick="handleLike()">
+       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+       </svg>
+       Like <span id="like-count">...</span>
+     </button>
+
+     <div id="view-counter">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+       <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+       <circle cx="12" cy="12" r="3"/>
+      </svg>
+       Views: <span id="view-count">...</span>
+     </div>
     </div>
   </div>
 </section>
@@ -1629,62 +1571,57 @@ updateClock();
   Fancybox.bind("[data-fancybox]", {});
 </script>
   
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
 <script>
-/* ── VISITOR COUNTER ──────────────────────────────────────────────────────
-   Menggunakan api.counterapi.dev (pengganti countapi.xyz yang sudah mati).
-   Fallback ke localStorage jika semua API gagal (offline / CORS).
-───────────────────────────────────────────────────────────────────────── */
-(function () {
-  var el = document.getElementById('view-count');
-  if (!el) return;
+  const firebaseConfig = {
+    apiKey: "AIzaSyAmiPmFWgHnvLqNVNaykgrk1gkmaVyd1Go",
+    authDomain: "portofolio-tedi.firebaseapp.com",
+    databaseURL: "https://portofolio-tedi-default-rtdb.firebaseio.com",
+    projectId: "portofolio-tedi",
+    storageBucket: "portofolio-tedi.firebasestorage.app",
+    messagingSenderId: "435243696299",
+    appId: "1:435243696299:web:62632334479656070437ee"
+  };
 
-  /* Nama namespace & key — sesuaikan jika perlu */
-  var NAMESPACE = 'tedizakariadana';   // harus unik, huruf kecil tanpa spasi
-  var KEY       = 'portfolio';
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
 
-  /* Tampilkan angka ke elemen, hapus skeleton */
-  function showCount(num) {
-    el.classList.remove('loading');
-    el.textContent = (typeof num === 'number' && num > 0)
-      ? num.toLocaleString('id-ID')
-      : '—';
-  }
-
-  /* Fallback: simpan & baca dari localStorage */
-  function localFallback() {
-    var stored = parseInt(localStorage.getItem('vc_' + KEY) || '0', 10);
-    stored = (isNaN(stored) ? 0 : stored) + 1;
-    localStorage.setItem('vc_' + KEY, stored);
-    showCount(stored);
-  }
-
-  /* ── Coba counterapi.dev ── */
-  fetch('https://api.counterapi.dev/v1/' + NAMESPACE + '/' + KEY + '/up', {
-    method: 'GET',
-    cache:  'no-store'
-  })
-  .then(function (r) {
-    if (!r.ok) throw new Error('status ' + r.status);
-    return r.json();
-  })
-  .then(function (data) {
-    /* counterapi.dev mengembalikan { count: N } */
-    var n = data && (data.count || data.value || data.hits);
-    if (typeof n === 'number') { showCount(n); return; }
-    throw new Error('no count field');
-  })
-  .catch(function () {
-    /* Fallback: api.countapi.xyz sudah mati, coba worker publik */
-    fetch('https://hits.sh/' + NAMESPACE + '/' + KEY + '.json')
-      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
-      .then(function (data) {
-        var n = data && (data.value || data.count || data.hits);
-        if (typeof n === 'number') { showCount(n); return; }
-        throw new Error();
-      })
-      .catch(localFallback);
+  // ── VIEWS ──
+  const viewsRef = db.ref('views');
+  viewsRef.transaction(val => (val || 0) + 1);
+  viewsRef.on('value', snap => {
+    document.getElementById('view-count').textContent =
+      (snap.val() || 0).toLocaleString('id-ID');
   });
-})();
+
+  // ── LIKES ──
+  const likesRef = db.ref('likes');
+  likesRef.on('value', snap => {
+    document.getElementById('like-count').textContent =
+      (snap.val() || 0).toLocaleString('id-ID');
+  });
+
+  function handleLike() {
+    const btn = document.getElementById('like-btn');
+
+    if (localStorage.getItem('liked-portofolio-tedi') === 'yes') {
+      document.getElementById('like-count').textContent = 'Sudah like!';
+      setTimeout(() => {
+        likesRef.once('value', snap => {
+          document.getElementById('like-count').textContent =
+            (snap.val() || 0).toLocaleString('id-ID');
+        });
+      }, 1500);
+      return;
+    }
+
+    likesRef.transaction(val => (val || 0) + 1);
+    localStorage.setItem('liked-portofolio-tedi', 'yes');
+    btn.classList.add('liked');
+  }
 </script>
 </body>
 </html>
