@@ -726,14 +726,15 @@ body.light-mode .nav-lang-btn:hover{
   transform: scale(1.2);
 }
 
-/* Menghilangkan teks "views" bawaan GoatCounter agar hanya angkanya yang tampil */
+/* Menghilangkan teks "views" bawaan GoatCounter */
 #stats-visitor span {
     display: none !important;
 }
 
-/* Memastikan angka yang muncul tetap berwarna Teal */
+/* Memastikan angka tetap berwarna Teal */
 #stats-visitor {
     color: #4fc3a1 !important;
+    font-style: normal;
 }
 </style>
 </head>
@@ -1542,26 +1543,34 @@ updateClock();
   Fancybox.bind("[data-fancybox]", {});
 </script>
   
-<script data-goatcounter="https://aprojek.goatcounter.com/count" 
-        async src="//gc.zgo.at/count.js"></script>
-
 <script>
     var checkGoat = setInterval(function() {
-        // Cek apakah script GoatCounter sudah siap
         if (window.goatcounter && window.goatcounter.visit_count) {
             clearInterval(checkGoat);
             
-            // Hapus loading/angka 0 sebelumnya
-            const target = document.getElementById('stats-visitor');
-            if (target) target.innerText = '';
-
-            // Perintah GoatCounter untuk mengisi angka ke dalam ID kita
+            // Panggil fungsi bawaan
             window.goatcounter.visit_count({
-                append: '#stats-visitor', // Targetkan ke ID pill Anda
-                no_onclick: true          // Agar angka tidak bisa diklik
+                append: '#stats-visitor',
+                no_onclick: true
             });
+
+            // Logika pembersihan teks "views"
+            var cleanTries = 0;
+            var cleaner = setInterval(function() {
+                var el = document.getElementById('stats-visitor');
+                if (el && el.innerText.includes('view')) {
+                    // Hanya ambil angka saja
+                    var num = el.innerText.replace(/[^0-9]/g, '');
+                    if (num) {
+                        el.innerText = parseInt(num).toLocaleString('id-ID');
+                        clearInterval(cleaner); // Berhenti jika sudah bersih
+                    }
+                }
+                cleanTries++;
+                if (cleanTries > 20) clearInterval(cleaner); // Berhenti setelah 4 detik jika gagal
+            }, 200);
         }
-    }, 200);
+    }, 100);
 </script>
 </body>
 </html>
