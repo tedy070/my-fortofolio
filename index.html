@@ -936,6 +936,76 @@ body.light-mode .nav-lang-btn:hover{
     padding: 8px 2px;
   }
 }
+
+  /* ── PENYESUAIAN MOBILE (TARUH DI PALING BAWAH CSS) ── */
+@media (max-width: 768px) {
+  /* Mengecilkan padding section utama */
+  #kontak {
+    padding: 60px 20px 80px;
+  }
+
+  /* Mengubah sistem sampingan (grid) menjadi bertumpuk */
+  .kontak-box {
+    grid-template-columns: 1fr !important;
+    max-width: 100%;
+    border-radius: 20px;
+  }
+
+  /* Mengetengahkan Panel Kiri (Info) */
+  .kontak-left {
+    border-right: none !important;
+    border-bottom: 1px solid var(--border);
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Push konten ke tengah */
+    text-align: center;
+  }
+
+  /* Mengetengahkan Indikator Status */
+  .kontak-status {
+    justify-content: center;
+    margin-bottom: 25px;
+  }
+
+  /* Merapikan Card Kontak di HP */
+  .kontak-info-card {
+    width: 100%;
+    max-width: 340px; /* Batas lebar agar tetap proporsional */
+    justify-content: flex-start; /* Ikon & Teks tetap rata kiri di dalam card */
+    margin: 0 auto 16px;
+    transform: none !important; /* Matikan geser samping agar tidak off-screen */
+  }
+  
+  .kontak-info-card:hover {
+    transform: translateY(-5px) scale(1.02) !important; /* Efek membal ke atas */
+  }
+
+  /* Mengetengahkan Panel Kanan (Form) */
+  .kontak-right {
+    padding: 40px 24px;
+  }
+
+  .kontak-form-title {
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Penyesuaian Ukuran Font */
+  .kontak-title {
+    font-size: 32px;
+  }
+
+  .kontak-sub {
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+
+  /* Memastikan tombol submit mudah diklik di HP */
+  .btn-submit {
+    padding: 18px;
+  }
+}
 </style>
 </head>
 <body>
