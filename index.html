@@ -726,28 +726,12 @@ body.light-mode .nav-lang-btn:hover{
   transform: scale(1.2);
 }
 
-/* Menghilangkan teks "views" bawaan GoatCounter */
-#stats-visitor span {
-    display: none !important;
-}
-
-/* Memastikan angka tetap berwarna Teal */
-#stats-visitor {
-    color: #4fc3a1 !important;
-    font-style: normal;
-}
-
-  /* Sembunyikan semua elemen tambahan yang dimasukkan GoatCounter */
-#stats-visitor * {
-    display: none !important;
-    font-size: 0 !important;
-    visibility: hidden !important;
-}
-
-/* Pastikan angka utama tetap muncul dan berwarna Teal */
-#stats-visitor {
-    display: inline-block;
-    color: #4fc3a1 !important;
+#view-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #888;
 }
 </style>
 </head>
@@ -1167,16 +1151,12 @@ body.light-mode .nav-lang-btn:hover{
         </form>
       </div>
 
-     <div class="visitor-wrapper" style="margin: 30px 0; text-align: center;">
-    <div style="display: inline-flex; align-items: center; background: rgba(79, 195, 161, 0.08); border: 1px solid rgba(79, 195, 161, 0.2); padding: 6px 16px; border-radius: 30px; backdrop-filter: blur(4px);">
-        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#4fc3a1" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; opacity: 0.8;">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-        </svg>
-        <span style="color: #94a3b8; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.3px;">
-            Views: <strong id="stats-visitor" style="color: #4fc3a1; margin-left: 4px; font-weight: 700;">0</strong>
-        </span>
-    </div>
+     <div id="view-counter">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+    <circle cx="12" cy="12" r="3"/>
+  </svg>
+  Views: <span id="view-count">...</span>
 </div>
     </div>
   </div>
@@ -1554,33 +1534,20 @@ updateClock();
   Fancybox.bind("[data-fancybox]", {});
 </script>
   
-<script data-goatcounter="https://aprojek.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-
 <script>
-    function loadVisitorCount() {
-        // Mengambil data JSON langsung dari akun aprojek
-        fetch('https://aprojek.goatcounter.com/counter/total.json')
-            .then(response => response.json())
-            .then(data => {
-                const el = document.getElementById('stats-visitor');
-                if (el && data.count) {
-                    // Hanya mengambil angka dan memformatnya (contoh: 1.250)
-                    const pureNumber = data.count.replace(/[^0-9]/g, '');
-                    el.innerText = parseInt(pureNumber).toLocaleString('id-ID');
-                }
-            })
-            .catch(err => {
-                console.log("Data belum tersedia");
-                // Jika error, biarkan tetap 0 atau tampilkan angka 1 sebagai awal
-                document.getElementById('stats-visitor').innerText = '1';
-            });
-    }
+  const NAMESPACE = 'TEDI ZAKARIA PERDANA';   // contoh: 'portofolio-budi'
+  const KEY       = 'KONTAK'; // contoh: 'beranda'
 
-    // Jalankan fungsi saat halaman dimuat
-    window.addEventListener('load', loadVisitorCount);
-    
-    // Ulangi setiap 10 detik jika ingin angka bertambah otomatis tanpa refresh
-    setInterval(loadVisitorCount, 10000);
+  window.addEventListener('load', async () => {
+    try {
+      const res  = await fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/${KEY}`);
+      const data = await res.json();
+      document.getElementById('view-count').textContent =
+        data.value.toLocaleString('id-ID');
+    } catch (err) {
+      document.getElementById('view-count').textContent = '—';
+    }
+  });
 </script>
 </body>
 </html>
