@@ -725,6 +725,101 @@ body.light-mode .nav-lang-btn:hover{
 .proj-link:focus ~ .proj-img-wrapper img {
   transform: scale(1.2);
 }
+
+  .visitor-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 32px 0;
+}
+
+.visitor-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 16px 7px 12px;
+  background: rgba(79, 195, 161, 0.06);
+  border: 1px solid rgba(79, 195, 161, 0.18);
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 0.2s ease, background 0.2s ease;
+  cursor: default;
+  user-select: none;
+}
+
+.visitor-pill:hover {
+  background: rgba(79, 195, 161, 0.1);
+  border-color: rgba(79, 195, 161, 0.32);
+}
+
+.visitor-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4fc3a1;
+  flex-shrink: 0;
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(79, 195, 161, 0.5); }
+  50%       { opacity: 0.7; box-shadow: 0 0 0 4px rgba(79, 195, 161, 0); }
+}
+
+.visitor-icon {
+  color: #4fc3a1;
+  opacity: 0.75;
+  flex-shrink: 0;
+}
+
+.visitor-label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #94a3b8;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.visitor-divider {
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 1px;
+}
+
+.visitor-count {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #4fc3a1;
+  letter-spacing: 0.3px;
+  min-width: 20px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.visitor-count.loading {
+  display: inline-block;
+  width: 36px;
+  height: 13px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(79, 195, 161, 0.08) 25%,
+    rgba(79, 195, 161, 0.18) 50%,
+    rgba(79, 195, 161, 0.08) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+  vertical-align: middle;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
 </style>
 </head>
 <body>
@@ -1143,18 +1238,19 @@ body.light-mode .nav-lang-btn:hover{
         </form>
       </div>
 
-      <div class="visitor-wrapper" style="margin: 30px 0; text-align: center;">
-    <div style="display: inline-flex; align-items: center; background: rgba(79, 195, 161, 0.08); border: 1px solid rgba(79, 195, 161, 0.2); padding: 6px 16px; border-radius: 30px; backdrop-filter: blur(4px);">
-        <svg viewBox="0 0 24 24" width="16" height="16" stroke="#4fc3a1" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; opacity: 0.8;">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-        </svg>
-        
-        <span style="color: #94a3b8; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.3px;">
-            Views: <strong id="stats-visitor" style="color: #4fc3a1; margin-left: 4px; font-weight: 700;">...</strong>
-        </span>
-    </div>
-     </div>
+      <!-- Visitor Counter -->
+<div class="visitor-wrapper">
+  <div class="visitor-pill">
+    <span class="visitor-dot"></span>
+    <svg class="visitor-icon" viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </svg>
+    <span class="visitor-label">Pengunjung</span>
+    <span class="visitor-divider"></span>
+    <strong class="visitor-count" id="stats-visitor">—</strong>
+  </div>
+</div>
     </div>
   </div>
 </section>
@@ -1531,32 +1627,52 @@ updateClock();
   Fancybox.bind("[data-fancybox]", {});
 </script>
   
-<script data-goatcounter="https://aprojek.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-
+<script
+  data-goatcounter="https://aprojek.goatcounter.com/count"
+  async
+  src="//gc.zgo.at/count.js">
+</script>
 <script>
-    (function() {
-        var checkGoat = setInterval(function() {
-            if (window.goatcounter && window.goatcounter.visit_count) {
-                clearInterval(checkGoat);
-                
-                // Memasukkan angka ke dalam ID #stats-visitor
-                window.goatcounter.visit_count({
-                    append: '#stats-visitor',
-                    no_onclick: true 
-                });
+(function () {
+  var el = document.getElementById('stats-visitor');
+  if (!el) return;
 
-                // Membersihkan teks tambahan (jika ada) agar hanya angka yang muncul
-                setTimeout(function() {
-                    let el = document.getElementById('stats-visitor');
-                    if (el) {
-                        // Menghapus karakter non-angka agar tampilan bersih
-                        let countOnly = el.innerText.replace(/[^0-9]/g, '');
-                        if (countOnly) el.innerText = countOnly;
-                    }
-                }, 1000);
-            }
-        }, 100);
-    })();
+  el.textContent = '';
+  el.classList.add('loading');
+
+  var MAX_WAIT = 8000;
+  var INTERVAL = 150;
+  var elapsed  = 0;
+
+  var timer = setInterval(function () {
+    elapsed += INTERVAL;
+
+    if (window.goatcounter && typeof window.goatcounter.visit_count === 'function') {
+      clearInterval(timer);
+
+      window.goatcounter.visit_count({
+        append: '#stats-visitor',
+        no_onclick: true
+      });
+
+      setTimeout(function () {
+        el.classList.remove('loading');
+        var raw = (el.innerText || el.textContent || '').trim();
+        var num = parseInt(raw.replace(/\D/g, ''), 10);
+        if (!isNaN(num) && num > 0) {
+          el.textContent = num.toLocaleString('id-ID');
+        } else {
+          el.textContent = raw || '—';
+        }
+      }, 600);
+
+    } else if (elapsed >= MAX_WAIT) {
+      clearInterval(timer);
+      el.classList.remove('loading');
+      el.textContent = '—';
+    }
+  }, INTERVAL);
+})();
 </script>
 </body>
 </html>
