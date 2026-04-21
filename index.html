@@ -1145,17 +1145,17 @@ body.light-mode .nav-lang-btn:hover{
 
       <div class="visitor-container" style="margin: 40px 0; text-align: center; font-family: sans-serif;">
         <div style="display: inline-flex; align-items: center; background: rgba(79, 195, 161, 0.1); border: 1px solid rgba(79, 195, 161, 0.3); padding: 8px 20px; border-radius: 50px;">
-       <svg viewBox="0 0 24 24" fill="none" stroke="#4fc3a1" stroke-width="2" style="width:18px; height:18px; margin-right:10px;">
-         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-         <circle cx="9" cy="7" r="4"></circle>
-         <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-         <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-        </svg>
-        <span style="color: #a0a0a8; font-size: 14px; letter-spacing: 0.5px;">
-        Views: <strong id="stats-visitor" style="color: #4fc3a1; margin-left: 5px;">0</strong>
-       </span>
-      </div>
+         <svg viewBox="0 0 24 24" fill="none" stroke="#4fc3a1" stroke-width="2" style="width:18px; height:18px; margin-right:10px;">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+         </svg>
+       <span style="color: #a0a0a8; font-size: 14px; letter-spacing: 0.5px;">
+       Views: <strong id="stats-visitor" style="color: #4fc3a1; margin-left: 5px;">0</strong>
+      </span>
      </div>
+    </div>
     </div>
   </div>
 </section>
@@ -1531,17 +1531,26 @@ updateClock();
   // Inisialisasi Fancybox agar membaca atribut data-fancybox
   Fancybox.bind("[data-fancybox]", {});
 </script>
+  
+<script data-goatcounter="https://aprojek.goatcounter.com/count" 
+        async src="//gc.zgo.at/count.js"></script>
+
 <script>
-    var t = setInterval(function() {
-        if (window.goatcounter && window.goatcounter.visit_count) {
-            clearInterval(t)
-            // Menargetkan ID stats-visitor agar angka muncul di dalam kotak
-            window.goatcounter.visit_count({append: '#stats-visitor'})
-        }
-    }, 100)
-</script>
-<script data-goatcounter="https://aprojek.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js">
+  function updateVisitorCount() {
+    // Mengambil data dari endpoint total.json milik aprojek
+    fetch('https://aprojek.goatcounter.com/counter/total.json')
+      .then(response => response.json())
+      .then(data => {
+        const countElement = document.getElementById('stats-visitor');
+        // Mengganti angka 0 dengan angka asli dari server
+        // toLocaleString() membuat angka ribuan jadi lebih rapi (contoh: 1,200)
+        countElement.innerText = data.count.toLocaleString();
+      })
+      .catch(error => console.log('Belum ada data atau akses ditolak'));
+  }
+
+  // Jalankan fungsi saat halaman selesai dimuat
+  window.addEventListener('load', updateVisitorCount);
 </script>
 </body>
 </html>
