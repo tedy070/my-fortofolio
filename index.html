@@ -1173,10 +1173,8 @@ body.light-mode .nav-lang-btn:hover{
             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
             <circle cx="12" cy="12" r="3"></circle>
         </svg>
-        
-        <span style="color: #94a3b8; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.3px; display: flex; align-items: center;">
-            <span style="margin-right: 4px;">Views:</span> 
-            <strong id="stats-visitor" style="color: #4fc3a1; font-weight: 700;">...</strong>
+        <span style="color: #94a3b8; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.3px;">
+            Views: <strong id="stats-visitor" style="color: #4fc3a1; margin-left: 4px; font-weight: 700;">0</strong>
         </span>
     </div>
 </div>
@@ -1559,39 +1557,30 @@ updateClock();
 <script data-goatcounter="https://aprojek.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 
 <script>
-    (function() {
-        var checkGoat = setInterval(function() {
-            if (window.goatcounter && window.goatcounter.visit_count) {
-                clearInterval(checkGoat);
+    function loadVisitorCount() {
+        // Mengambil data JSON langsung dari akun aprojek
+        fetch('https://aprojek.goatcounter.com/counter/total.json')
+            .then(response => response.json())
+            .then(data => {
+                const el = document.getElementById('stats-visitor');
+                if (el && data.count) {
+                    // Hanya mengambil angka dan memformatnya (contoh: 1.250)
+                    const pureNumber = data.count.replace(/[^0-9]/g, '');
+                    el.innerText = parseInt(pureNumber).toLocaleString('id-ID');
+                }
+            })
+            .catch(err => {
+                console.log("Data belum tersedia");
+                // Jika error, biarkan tetap 0 atau tampilkan angka 1 sebagai awal
+                document.getElementById('stats-visitor').innerText = '1';
+            });
+    }
 
-                window.goatcounter.visit_count({
-                    append: '#stats-visitor',
-                    no_onclick: true
-                });
-
-                // Fungsi pembersih agresif
-                var forceClean = function() {
-                    var el = document.getElementById('stats-visitor');
-                    if (el) {
-                        // Ambil hanya karakter angka
-                        var num = el.innerText.replace(/[^0-9]/g, '');
-                        if (num && el.innerText !== num) {
-                            // Masukkan format ribuan Indonesia
-                            el.innerText = parseInt(num).toLocaleString('id-ID');
-                        }
-                    }
-                };
-
-                // Jalankan pembersihan berulang kali dalam 3 detik pertama
-                var counter = 0;
-                var loopClean = setInterval(function() {
-                    forceClean();
-                    counter++;
-                    if (counter > 20) clearInterval(loopClean); 
-                }, 200);
-            }
-        }, 150);
-    })();
+    // Jalankan fungsi saat halaman dimuat
+    window.addEventListener('load', loadVisitorCount);
+    
+    // Ulangi setiap 10 detik jika ingin angka bertambah otomatis tanpa refresh
+    setInterval(loadVisitorCount, 10000);
 </script>
 </body>
 </html>
