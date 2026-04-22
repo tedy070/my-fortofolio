@@ -1495,6 +1495,14 @@ function setLang(lang) {
   translatables.forEach(el => {
     el.textContent = (lang === 'id') ? el.getAttribute('data-id') : el.getAttribute('data-en');
   });
+
+  // Update placeholder pada input
+  document.querySelectorAll('.form-input').forEach(input => {
+    const translation = input.getAttribute('data-' + lang + '-ph');
+    if (translation) {
+      input.setAttribute('placeholder', translation);
+    }
+  });
 }
 
 // ═══ DARK/LIGHT MODE ═══
